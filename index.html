@@ -1,372 +1,295 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- <title>Quiz de Diagnóstico - O Código do Poder</title>
- <style>
-   body {
-     margin: 0;
-     padding: 0;
-     font-family: 'Segoe UI', sans-serif;
-     background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-     color: #fff;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     min-height: 100vh;
-   }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz de Diagnóstico - O Código da Mente</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-   .container {
-     max-width: 650px;
-     padding: 40px 25px;
-     width: 100%;
-     box-sizing: border-box;
-   }
+    .container {
+      max-width: 650px;
+      padding: 40px 25px;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-   h1 {
-     font-size: 32px;
-     text-align: center;
-     margin-bottom: 15px;
-     color: #FFD700;
-     text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-     line-height: 1.2;
-   }
+    h1 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #00FF88;
+      text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+      line-height: 1.2;
+    }
 
-   .subtitle {
-     text-align: center;
-     font-size: 16px;
-     color: #ccc;
-     margin-bottom: 35px;
-     font-style: italic;
-   }
+    .subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: #aaa;
+      margin-bottom: 35px;
+      font-style: italic;
+    }
 
-   .progress-bar {
-     width: 100%;
-     height: 8px;
-     background: #333;
-     border-radius: 10px;
-     margin-bottom: 30px;
-     overflow: hidden;
-   }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #222;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
 
-   .progress-fill {
-     height: 100%;
-     background: linear-gradient(90deg, #FFD700, #FFA500);
-     border-radius: 10px;
-     transition: width 0.3s ease;
-     width: 10%;
-   }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00FF88, #00CC66);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+      width: 10%;
+    }
 
-   .question-counter {
-     text-align: center;
-     color: #FFD700;
-     font-weight: bold;
-     margin-bottom: 20px;
-     font-size: 14px;
-   }
+    .question-counter {
+      text-align: center;
+      color: #00FF88;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
 
-   .question {
-     margin-bottom: 30px;
-     background: linear-gradient(145deg, #1e1e1e, #252525);
-     padding: 25px;
-     border-radius: 15px;
-     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.1);
-     border: 1px solid rgba(255, 215, 0, 0.2);
-   }
+    .question {
+      margin-bottom: 30px;
+      background: linear-gradient(145deg, #1e1e1e, #252525);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 255, 136, 0.15);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+    }
 
-   .question p {
-     font-size: 20px;
-     margin-bottom: 20px;
-     font-weight: 500;
-     line-height: 1.4;
-     color: #f5f5f5;
-   }
+    .question p {
+      font-size: 20px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #f5f5f5;
+    }
 
-   .options button {
-     display: block;
-     width: 100%;
-     margin-bottom: 12px;
-     padding: 15px 20px;
-     background: linear-gradient(145deg, #FFD700, #FFA500);
-     border: none;
-     border-radius: 10px;
-     color: #000;
-     font-weight: bold;
-     cursor: pointer;
-     transition: all 0.3s ease;
-     font-size: 16px;
-     text-align: left;
-     box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
-   }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 15px 20px;
+      background: linear-gradient(145deg, #00FF88, #00CC66);
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      text-align: left;
+      box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+    }
 
-   .options button:hover {
-     background: linear-gradient(145deg, #e6c200, #e6940a);
-     transform: translateY(-2px);
-     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
-   }
+    .options button:hover {
+      background: linear-gradient(145deg, #00e67a, #00b35c);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+    }
 
-   .options button:active {
-     transform: translateY(0);
-   }
+    .final {
+      text-align: center;
+      display: none;
+      background: linear-gradient(145deg, #1e1e1e, #252525);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 2px solid #00ff88;
+    }
 
-   .final {
-     text-align: center;
-     display: none;
-     background: linear-gradient(145deg, #1e1e1e, #252525);
-     padding: 40px 30px;
-     border-radius: 20px;
-     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-     border: 2px solid #00ff88;
-   }
+    .final h2 {
+      font-size: 28px;
+      color: #00ff88;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+    }
 
-   .final h2 {
-     font-size: 28px;
-     color: #00ff88;
-     margin-bottom: 20px;
-     text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-   }
+    .final p {
+      font-size: 18px;
+      margin-bottom: 25px;
+      line-height: 1.5;
+      color: #ddd;
+    }
 
-   .final p {
-     font-size: 18px;
-     margin-bottom: 25px;
-     line-height: 1.5;
-     color: #ddd;
-   }
+    .urgency-text {
+      color: #ff4444;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
 
-   .urgency-text {
-     color: #ff4444;
-     font-weight: bold;
-     font-size: 16px;
-     margin-bottom: 20px;
-     animation: pulse 2s infinite;
-   }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
 
-   @keyframes pulse {
-     0% { opacity: 1; }
-     50% { opacity: 0.7; }
-     100% { opacity: 1; }
-   }
+    .btn-final {
+      padding: 18px 35px;
+      font-size: 20px;
+      background: linear-gradient(145deg, #00ff88, #00cc6a);
+      border: none;
+      border-radius: 12px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-   .btn-final {
-     padding: 18px 35px;
-     font-size: 20px;
-     background: linear-gradient(145deg, #00ff88, #00cc6a);
-     border: none;
-     border-radius: 12px;
-     color: #000;
-     font-weight: bold;
-     cursor: pointer;
-     text-decoration: none;
-     display: inline-block;
-     transition: all 0.3s ease;
-     box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
-     text-transform: uppercase;
-     letter-spacing: 1px;
-   }
+    .btn-final:hover {
+      background: linear-gradient(145deg, #00e67a, #00b35c);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+    }
 
-   .btn-final:hover {
-     background: linear-gradient(145deg, #00e67a, #00b35c);
-     transform: translateY(-3px);
-     box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
-   }
-
-   .hidden {
-     display: none;
-   }
-
-   .bonus-text {
-     background: #ff4444;
-     color: white;
-     padding: 10px;
-     border-radius: 8px;
-     margin-bottom: 20px;
-     font-size: 14px;
-     font-weight: bold;
-   }
-
-   @media (max-width: 768px) {
-     .container {
-       padding: 25px 15px;
-     }
-     
-     h1 {
-       font-size: 26px;
-     }
-     
-     .question p {
-       font-size: 18px;
-     }
-     
-     .final h2 {
-       font-size: 24px;
-     }
-   }
- </style>
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
- <div class="container">
-   <h1>Descubra Seu Nível de Controle Mental</h1>
-   <p class="subtitle">Teste rápido para identificar o que está bloqueando seu poder pessoal</p>
-   
-   <div class="progress-bar">
-     <div class="progress-fill" id="progressBar"></div>
-   </div>
-   
-   <div class="question-counter" id="questionCounter">Pergunta 1 de 10</div>
+  <div class="container">
+    <h1>Descubra o Que Está Travando Sua Mente</h1>
+    <p class="subtitle">Teste rápido de autoconhecimento para quem quer dominar o próprio caos.</p>
 
-   <div id="quiz">
-     <div class="question">
-       <p>1. Você já explodiu por coisa pequena e se arrependeu depois?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">✋ Sim, e nem foi a primeira vez</button>
-         <button onclick="nextQuestion()">🤔 Às vezes, mas eu me seguro</button>
-         <button onclick="nextQuestion()">✅ Não, eu sei controlar minhas emoções</button>
-       </div>
-     </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
 
-     <div class="question hidden">
-       <p>2. Quando alguém te confronta, o que acontece?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">😰 Eu me perco e fico na defensiva</button>
-         <button onclick="nextQuestion()">🤷‍♂️ Depende da pessoa</button>
-         <button onclick="nextQuestion()">🎯 Eu mantenho o controle e reajo com estratégia</button>
-       </div>
-     </div>
+    <div class="question-counter" id="questionCounter">Pergunta 1 de 6</div>
 
-     <div class="question hidden">
-       <p>3. Você sente que sua mente te sabota?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">😵 O tempo todo</button>
-         <button onclick="nextQuestion()">⚠️ Em algumas decisões importantes</button>
-         <button onclick="nextQuestion()">🧠 Não, eu sou centrado</button>
-       </div>
-     </div>
+    <div id="quiz">
+      <div class="question">
+        <p>1. Você já explodiu por coisa pequena e depois se arrependeu?</p>
+        <div class="options">
+          <button onclick="nextQuestion()">Sim, e acontece direto</button>
+          <button onclick="nextQuestion()">Às vezes, mas tento segurar</button>
+          <button onclick="nextQuestion()">Não, eu tenho controle emocional</button>
+        </div>
+      </div>
 
-     <div class="question hidden">
-       <p>4. Você já teve dificuldade em se impor em situações onde sabia que devia?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">😔 Sim, muitas vezes</button>
-         <button onclick="nextQuestion()">😅 Às vezes fico inseguro</button>
-         <button onclick="nextQuestion()">💪 Não, sempre posiciono minha opinião com firmeza</button>
-       </div>
-     </div>
+      <div class="question hidden">
+        <p>2. Quando sente raiva, você consegue pensar racionalmente?</p>
+        <div class="options">
+          <button onclick="nextQuestion()">Quase nunca</button>
+          <button onclick="nextQuestion()">Depende da situação</button>
+          <button onclick="nextQuestion()">Sim, sempre</button>
+        </div>
+      </div>
 
-     <div class="question hidden">
-       <p>5. Quando algo dá errado, sua reação costuma ser:</p>
-       <div class="options">
-         <button onclick="nextQuestion()">😡 Me culpo, me irrito e travo</button>
-         <button onclick="nextQuestion()">😬 Tento manter a calma, mas nem sempre consigo</button>
-         <button onclick="nextQuestion()">🔍 Analiso friamente e resolvo</button>
-       </div>
-     </div>
+      <div class="question hidden">
+        <p>3. Você sente que se sabota nas horas mais importantes?</p>
+        <div class="options">
+          <button onclick="nextQuestion()">Sim, sempre</button>
+          <button onclick="nextQuestion()">Às vezes</button>
+          <button onclick="nextQuestion()">Não, sou estratégico</button>
+        </div>
+      </div>
 
-     <div class="question hidden">
-       <p>6. O que você sente quando alguém não te leva a sério?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">😤 Raiva e impotência</button>
-         <button onclick="nextQuestion()">😟 Insegurança</button>
-         <button onclick="nextQuestion()">😎 Nada, eu lido com isso de forma estratégica</button>
-       </div>
-     </div>
+      <div class="question hidden">
+        <p>4. Você sente que as pessoas te tratam com menos respeito do que você merece?</p>
+        <div class="options">
+          <button onclick="nextQuestion()">Sim, direto</button>
+          <button onclick="nextQuestion()">Depende da pessoa</button>
+          <button onclick="nextQuestion()">Não, eu imponho respeito</button>
+        </div>
+      </div>
 
-     <div class="question hidden">
-       <p>7. Você sente que poderia estar mais longe na vida se tivesse mais controle emocional?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">💯 Com certeza</button>
-         <button onclick="nextQuestion()">🤔 Talvez sim</button>
-         <button onclick="nextQuestion()">✨ Não, estou exatamente onde quero</button>
-       </div>
-     </div>
+      <div class="question hidden">
+        <p>5. O que mais te atrapalha hoje?</p>
+        <div class="options">
+          <button onclick="nextQuestion()">Minha cabeça não para</button>
+          <button onclick="nextQuestion()">A falta de foco</button>
+          <button onclick="nextQuestion()">Nada, tô 100%</button>
+        </div>
+      </div>
 
-     <div class="question hidden">
-       <p>8. Quando está sozinho, você sente que sua mente te sufoca?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">🌪️ Sim, minha cabeça não para</button>
-         <button onclick="nextQuestion()">⚡ Às vezes</button>
-         <button onclick="nextQuestion()">🧘‍♂️ Não, eu tenho paz interna</button>
-       </div>
-     </div>
+      <div class="question hidden">
+        <p>6. Se eu te mostrasse um caminho pra dominar isso tudo, o que você faria?</p>
+        <div class="options">
+          <button onclick="nextQuestion()">Quero agora</button>
+          <button onclick="nextQuestion()">Penso um pouco antes</button>
+          <button onclick="nextQuestion()">Não preciso disso</button>
+        </div>
+      </div>
 
-     <div class="question hidden">
-       <p>9. Você sente que os outros têm mais controle sobre você do que você mesmo?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">😞 Sim, completamente</button>
-         <button onclick="nextQuestion()">🎭 Em algumas situações</button>
-         <button onclick="nextQuestion()">👑 Nunca, eu tenho domínio total</button>
-       </div>
-     </div>
+      <div class="final hidden" id="finalMessage">
+        <h2>🧠 SEU DIAGNÓSTICO FOI CONCLUÍDO</h2>
+        <p><strong>Resultado:</strong> Sua mente está te limitando mais do que você imagina. Mas a chave para virar esse jogo já existe.</p>
 
-     <div class="question hidden">
-       <p>10. Se eu te der uma chave pra reprogramar isso tudo, o que você faz?</p>
-       <div class="options">
-         <button onclick="nextQuestion()">🔥 Pego agora</button>
-         <button onclick="nextQuestion()">🤨 Penso um pouco antes</button>
-         <button onclick="nextQuestion()">😴 Nem preciso, já tô bem assim</button>
-       </div>
-     </div>
+        <p>Você vai aprender os códigos mentais que homens de alto nível usam para:</p>
+        <ul style="text-align:left; color:#ccc; font-size:16px; margin: 20px auto;">
+          <li>✅ Manter o controle sob pressão</li>
+          <li>✅ Impor respeito sem gritar</li>
+          <li>✅ Calar a ansiedade com estratégia</li>
+          <li>✅ Agir com frieza onde todo mundo pira</li>
+        </ul>
 
-     <div class="final hidden" id="finalMessage">
-       <h2>🎯 SEU DIAGNÓSTICO ESTÁ PRONTO!</h2>
-       <p><strong>Resultado:</strong> Você está sendo controlado por padrões mentais invisíveis que sabotam seu poder pessoal.</p>
-       
-       <div class="bonus-text">
-         ⚡ OFERTA ESPECIAL: Apenas hoje com 68% OFF
-       </div>
-       
-       <p>Descubra agora os <strong>códigos mentais</strong> que pessoas poderosas usam para dominar qualquer situação e transformar sua realidade em apenas 30 dias.</p>
-       
-       <div class="urgency-text">
-         ⏰ Esta oferta expira em breve!
-       </div>
-       
-       <a href="https://kiwify.app/YOUR_LINK_AQUI" target="_blank">
-         <button class="btn-final">🚀 QUERO O CÓDIGO AGORA</button>
-       </a>
-       
-       <p style="font-size: 14px; color: #888; margin-top: 20px;">
-         ✅ Acesso imediato<br>
-         ✅ Garantia de 7 dias<br>
-         ✅ Suporte especializado
-       </p>
-     </div>
-   </div>
- </div>
+        <div class="urgency-text">
+          Oferta disponível por tempo limitado!
+        </div>
 
- <script>
-   const questions = document.querySelectorAll(".question");
-   const progressBar = document.getElementById("progressBar");
-   const questionCounter = document.getElementById("questionCounter");
-   let current = 0;
-   const totalQuestions = 10;
+        <a href="https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm" target="_blank">
+          <button class="btn-final">QUERO ACESSAR O CÓDIGO</button>
+        </a>
+      </div>
+    </div>
+  </div>
 
-   function updateProgress() {
-     const progress = ((current + 1) / totalQuestions) * 100;
-     progressBar.style.width = progress + "%";
-     questionCounter.textContent = `Pergunta ${current + 1} de ${totalQuestions}`;
-   }
+  <script>
+    const questions = document.querySelectorAll(".question");
+    const progressBar = document.getElementById("progressBar");
+    const questionCounter = document.getElementById("questionCounter");
+    let current = 0;
+    const totalQuestions = 6;
 
-   function nextQuestion() {
-     if (current < questions.length - 1) {
-       questions[current].classList.add("hidden");
-       current++;
-       questions[current].classList.remove("hidden");
-       updateProgress();
-     } else {
-       questions[current].classList.add("hidden");
-       document.getElementById("finalMessage").classList.remove("hidden");
-       document.querySelector(".progress-bar").style.display = "none";
-       document.querySelector(".question-counter").style.display = "none";
-       
-       // Scroll suave para o resultado
-       document.getElementById("finalMessage").scrollIntoView({ 
-         behavior: 'smooth' 
-       });
-     }
-   }
+    function updateProgress() {
+      const progress = ((current + 1) / totalQuestions) * 100;
+      progressBar.style.width = progress + "%";
+      questionCounter.textContent = `Pergunta ${current + 1} de ${totalQuestions}`;
+    }
 
-   // Inicializar progresso
-   updateProgress();
- </script>
+    function nextQuestion() {
+      if (current < questions.length - 1) {
+        questions[current].classList.add("hidden");
+        current++;
+        questions[current].classList.remove("hidden");
+        updateProgress();
+      } else {
+        questions[current].classList.add("hidden");
+        document.getElementById("finalMessage").classList.remove("hidden");
+        document.querySelector(".progress-bar").style.display = "none";
+        document.querySelector(".question-counter").style.display = "none";
+        document.getElementById("finalMessage").scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    updateProgress();
+  </script>
 </body>
 </html>
