@@ -3,293 +3,696 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz de Diagnóstico - O Código da Mente</title>
+  <title>Quiz: Descubra Seu Nível de Controle Mental - O Código do Poder</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      line-height: 1.6;
+      overflow-x: hidden;
       min-height: 100vh;
     }
 
     .container {
-      max-width: 650px;
-      padding: 40px 25px;
-      width: 100%;
-      box-sizing: border-box;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    h1 {
-      font-size: 32px;
-      text-align: center;
-      margin-bottom: 15px;
-      color: #00FF88;
-      text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      text-align: center;
-      font-size: 16px;
-      color: #aaa;
-      margin-bottom: 35px;
-      font-style: italic;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: #222;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #00FF88, #00CC66);
-      border-radius: 10px;
-      transition: width 0.3s ease;
-      width: 10%;
-    }
-
-    .question-counter {
-      text-align: center;
-      color: #00FF88;
+    .logo {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(45deg, #ff6b6b, #ff4757);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
       font-weight: bold;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-
-    .question {
-      margin-bottom: 30px;
-      background: linear-gradient(145deg, #1e1e1e, #252525);
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 255, 136, 0.15);
-      border: 1px solid rgba(0, 255, 136, 0.2);
-    }
-
-    .question p {
-      font-size: 20px;
-      margin-bottom: 20px;
-      font-weight: 500;
-      line-height: 1.4;
-      color: #f5f5f5;
-    }
-
-    .options button {
-      display: block;
-      width: 100%;
-      margin-bottom: 12px;
-      padding: 15px 20px;
-      background: linear-gradient(145deg, #00FF88, #00CC66);
-      border: none;
-      border-radius: 10px;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 16px;
-      text-align: left;
-      box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
-    }
-
-    .options button:hover {
-      background: linear-gradient(145deg, #00e67a, #00b35c);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
-    }
-
-    .final {
-      text-align: center;
-      display: none;
-      background: linear-gradient(145deg, #1e1e1e, #252525);
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      border: 2px solid #00ff88;
-    }
-
-    .final h2 {
-      font-size: 28px;
-      color: #00ff88;
-      margin-bottom: 20px;
-      text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-    }
-
-    .final p {
-      font-size: 18px;
-      margin-bottom: 25px;
-      line-height: 1.5;
-      color: #ddd;
-    }
-
-    .urgency-text {
-      color: #ff4444;
-      font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 20px;
+      margin: 0 auto 30px;
+      box-shadow: 0 0 40px rgba(255, 107, 107, 0.4);
       animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.7; }
-      100% { opacity: 1; }
+      0% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 107, 107, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(255, 107, 107, 0.6); }
+      100% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 107, 107, 0.4); }
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: #333;
+      border-radius: 10px;
+      margin-bottom: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff6b6b, #ff4757, #ffd700);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 50px;
+      opacity: 0;
+      animation: fadeInDown 1s ease-out forwards;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .quiz-title {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #ff6b6b, #ffd700, #ff4757);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { filter: brightness(1); }
+      to { filter: brightness(1.2); }
+    }
+
+    .quiz-subtitle {
+      font-size: 1.3rem;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .quiz-description {
+      font-size: 1.1rem;
+      color: #999;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .question-container {
+      background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+      border: 1px solid #333;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(50px);
+      animation: slideInUp 0.8s ease-out forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .question-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #ff6b6b, #ffd700);
+      animation: loadingBar 3s ease-in-out infinite;
+    }
+
+    @keyframes loadingBar {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .question-number {
+      color: #ff6b6b;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .question-text {
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .options-container {
+      display: grid;
+      gap: 15px;
+    }
+
+    .option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+
+    .option:hover {
+      background: rgba(255, 107, 107, 0.1);
+      border-color: #ff6b6b;
+      transform: translateX(10px);
+      box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
+    }
+
+    .option.selected {
+      background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(255, 71, 87, 0.2));
+      border-color: #ff6b6b;
+      transform: scale(1.02);
+    }
+
+    .option-letter {
+      background: linear-gradient(45deg, #ff6b6b, #ff4757);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .option-text {
+      flex: 1;
+    }
+
+    .btn-container {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn-next {
+      background: linear-gradient(45deg, #ff6b6b, #ff4757);
+      color: white;
+      border: none;
+      padding: 18px 50px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-next::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-next:hover::before {
+      left: 100%;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+    }
+
+    .btn-next:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result-container {
+      text-align: center;
+      padding: 50px 20px;
+      display: none;
+    }
+
+    .result-title {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      background: linear-gradient(45deg, #2ed573, #1dd1a1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      animation: bounceIn 1s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .result-description {
+      font-size: 1.3rem;
+      color: #ccc;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .result-benefits {
+      background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+      border-radius: 20px;
+      padding: 40px;
+      margin: 40px 0;
+      border: 1px solid #333;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeInLeft 0.8s ease-out forwards;
+    }
+
+    .benefit-item:nth-child(1) { animation-delay: 0.2s; }
+    .benefit-item:nth-child(2) { animation-delay: 0.4s; }
+    .benefit-item:nth-child(3) { animation-delay: 0.6s; }
+    .benefit-item:nth-child(4) { animation-delay: 0.8s; }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .benefit-icon {
+      margin-right: 20px;
+      font-size: 2rem;
+      animation: rotate 2s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .price-section {
+      background: linear-gradient(45deg, #2ed573, #1dd1a1);
+      color: #000;
+      padding: 30px;
+      border-radius: 20px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+      animation: slideInUp 1s ease-out 1.5s both;
+    }
+
+    .price-section::before {
+      content: '🔥 OFERTA LIMITADA 🔥';
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff4757;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 0 0 15px 15px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #666;
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+
+    .new-price {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin: 15px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .installments {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      font-weight: 600;
     }
 
     .btn-final {
-      padding: 18px 35px;
-      font-size: 20px;
-      background: linear-gradient(145deg, #00ff88, #00cc6a);
+      background: linear-gradient(45deg, #ff4757, #ff3742);
+      color: white;
       border: none;
-      border-radius: 12px;
-      color: #000;
+      padding: 25px 60px;
+      font-size: 1.4rem;
       font-weight: bold;
+      border-radius: 50px;
       cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+      box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      animation: pulse 2s infinite;
     }
 
     .btn-final:hover {
-      background: linear-gradient(145deg, #00e67a, #00b35c);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255, 71, 87, 0.6);
     }
 
     .hidden {
       display: none;
     }
+
+    @media (max-width: 768px) {
+      .quiz-title {
+        font-size: 2.2rem;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+      
+      .question-container {
+        padding: 25px;
+      }
+      
+      .new-price {
+        font-size: 2.8rem;
+      }
+      
+      .btn-final {
+        padding: 20px 40px;
+        font-size: 1.2rem;
+      }
+    }
+
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-element {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Descubra o Que Está Travando Sua Mente</h1>
-    <p class="subtitle">Teste rápido de autoconhecimento para quem quer dominar o próprio caos.</p>
+  <div class="floating-elements">
+    <div class="floating-element" style="top: 10%; left: 10%;">🧠</div>
+    <div class="floating-element" style="top: 20%; right: 15%;">⚡</div>
+    <div class="floating-element" style="top: 60%; left: 5%;">🎯</div>
+    <div class="floating-element" style="bottom: 20%; right: 10%;">🔥</div>
+    <div class="floating-element" style="bottom: 40%; left: 20%;">💪</div>
+  </div>
 
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressBar"></div>
+  <div class="container">
+    <div class="logo">🧠</div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <div class="question-counter" id="questionCounter">Pergunta 1 de 6</div>
+    <div class="quiz-header">
+      <h1 class="quiz-title">Descubra Seu Nível de Controle Mental</h1>
+      <p class="quiz-subtitle">Teste personalizado baseado no método "O Código do Poder"</p>
+      <p class="quiz-description">Responda às perguntas abaixo e descubra como dominar suas emoções e relacionamentos com os códigos mentais certos!</p>
+    </div>
 
-    <div id="quiz">
-      <div class="question">
-        <p>1. Você já explodiu por coisa pequena e depois se arrependeu?</p>
-        <div class="options">
-          <button onclick="nextQuestion()">Sim, e acontece direto</button>
-          <button onclick="nextQuestion()">Às vezes, mas tento segurar</button>
-          <button onclick="nextQuestion()">Não, eu tenho controle emocional</button>
+    <div id="quizContainer">
+      <!-- Pergunta 1 -->
+      <div class="question-container" data-question="1">
+        <div class="question-number">Pergunta 1 de 5</div>
+        <h2 class="question-text">Como você reage quando alguém te desrespeita em público?</h2>
+        <div class="options-container">
+          <div class="option" data-value="a">
+            <div class="option-letter">A</div>
+            <div class="option-text">Explodo na hora e depois me arrependo</div>
+          </div>
+          <div class="option" data-value="b">
+            <div class="option-letter">B</div>
+            <div class="option-text">Fico nervoso mas tento me controlar</div>
+          </div>
+          <div class="option" data-value="c">
+            <div class="option-letter">C</div>
+            <div class="option-text">Mantenho a calma e respondo com firmeza</div>
+          </div>
+          <div class="option" data-value="d">
+            <div class="option-letter">D</div>
+            <div class="option-text">Ignoro completamente</div>
+          </div>
         </div>
       </div>
 
-      <div class="question hidden">
-        <p>2. Quando sente raiva, você consegue pensar racionalmente?</p>
-        <div class="options">
-          <button onclick="nextQuestion()">Quase nunca</button>
-          <button onclick="nextQuestion()">Depende da situação</button>
-          <button onclick="nextQuestion()">Sim, sempre</button>
+      <!-- Pergunta 2 -->
+      <div class="question-container hidden" data-question="2">
+        <div class="question-number">Pergunta 2 de 5</div>
+        <h2 class="question-text">Qual é o seu maior desafio em relacionamentos?</h2>
+        <div class="options-container">
+          <div class="option" data-value="a">
+            <div class="option-letter">A</div>
+            <div class="option-text">Não consigo impor limites</div>
+          </div>
+          <div class="option" data-value="b">
+            <div class="option-letter">B</div>
+            <div class="option-text">Tenho dificuldade para expressar sentimentos</div>
+          </div>
+          <div class="option" data-value="c">
+            <div class="option-letter">C</div>
+            <div class="option-text">Sou muito ansioso e inseguro</div>
+          </div>
+          <div class="option" data-value="d">
+            <div class="option-letter">D</div>
+            <div class="option-text">Não tenho problemas significativos</div>
+          </div>
         </div>
       </div>
 
-      <div class="question hidden">
-        <p>3. Você sente que se sabota nas horas mais importantes?</p>
-        <div class="options">
-          <button onclick="nextQuestion()">Sim, sempre</button>
-          <button onclick="nextQuestion()">Às vezes</button>
-          <button onclick="nextQuestion()">Não, sou estratégico</button>
+      <!-- Pergunta 3 -->
+      <div class="question-container hidden" data-question="3">
+        <div class="question-number">Pergunta 3 de 5</div>
+        <h2 class="question-text">Como você lida com situações de pressão no trabalho?</h2>
+        <div class="options-container">
+          <div class="option" data-value="a">
+            <div class="option-letter">A</div>
+            <div class="option-text">Fico paralisado e não consigo pensar</div>
+          </div>
+          <div class="option" data-value="b">
+            <div class="option-letter">B</div>
+            <div class="option-text">Fico estressado mas consigo resolver</div>
+          </div>
+          <div class="option" data-value="c">
+            <div class="option-letter">C</div>
+            <div class="option-text">Mantenho o foco e resolvo com calma</div>
+          </div>
+          <div class="option" data-value="d">
+            <div class="option-letter">D</div>
+            <div class="option-text">Pressão me motiva a dar o melhor</div>
+          </div>
         </div>
       </div>
 
-      <div class="question hidden">
-        <p>4. Você sente que as pessoas te tratam com menos respeito do que você merece?</p>
-        <div class="options">
-          <button onclick="nextQuestion()">Sim, direto</button>
-          <button onclick="nextQuestion()">Depende da pessoa</button>
-          <button onclick="nextQuestion()">Não, eu imponho respeito</button>
+      <!-- Pergunta 4 -->
+      <div class="question-container hidden" data-question="4">
+        <div class="question-number">Pergunta 4 de 5</div>
+        <h2 class="question-text">Qual frase melhor descreve sua autoconfiança?</h2>
+        <div class="options-container">
+          <div class="option" data-value="a">
+            <div class="option-letter">A</div>
+            <div class="option-text">"Sempre duvido das minhas decisões"</div>
+          </div>
+          <div class="option" data-value="b">
+            <div class="option-letter">B</div>
+            <div class="option-text">"Às vezes me sinto inseguro"</div>
+          </div>
+          <div class="option" data-value="c">
+            <div class="option-letter">C</div>
+            <div class="option-text">"Geralmente confio em mim mesmo"</div>
+          </div>
+          <div class="option" data-value="d">
+            <div class="option-letter">D</div>
+            <div class="option-text">"Tenho total confiança em minhas habilidades"</div>
+          </div>
         </div>
       </div>
 
-      <div class="question hidden">
-        <p>5. O que mais te atrapalha hoje?</p>
-        <div class="options">
-          <button onclick="nextQuestion()">Minha cabeça não para</button>
-          <button onclick="nextQuestion()">A falta de foco</button>
-          <button onclick="nextQuestion()">Nada, tô 100%</button>
+      <!-- Pergunta 5 -->
+      <div class="question-container hidden" data-question="5">
+        <div class="question-number">Pergunta 5 de 5</div>
+        <h2 class="question-text">O que mais te motiva a buscar crescimento pessoal?</h2>
+        <div class="options-container">
+          <div class="option" data-value="a">
+            <div class="option-letter">A</div>
+            <div class="option-text">Quero parar de ser visto como fraco</div>
+          </div>
+          <div class="option" data-value="b">
+            <div class="option-letter">B</div>
+            <div class="option-text">Desejo melhorar meus relacionamentos</div>
+          </div>
+          <div class="option" data-value="c">
+            <div class="option-letter">C</div>
+            <div class="option-text">Quero alcançar meus objetivos mais rápido</div>
+          </div>
+          <div class="option" data-value="d">
+            <div class="option-letter">D</div>
+            <div class="option-text">Busco dominar totalmente minha mente</div>
+          </div>
         </div>
       </div>
 
-      <div class="question hidden">
-        <p>6. Se eu te mostrasse um caminho pra dominar isso tudo, o que você faria?</p>
-        <div class="options">
-          <button onclick="nextQuestion()">Quero agora</button>
-          <button onclick="nextQuestion()">Penso um pouco antes</button>
-          <button onclick="nextQuestion()">Não preciso disso</button>
+      <div class="btn-container">
+        <button class="btn-next" id="nextBtn" disabled>Próxima Pergunta</button>
+      </div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="result-container" id="resultContainer">
+      <h2 class="result-title">🎯 Resultado Personalizado</h2>
+      <p class="result-description">Baseado nas suas respostas, identificamos que você precisa desenvolver um controle mental mais sólido para dominar suas emoções e relacionamentos!</p>
+      
+      <div class="result-benefits">
+        <div class="benefit-item">
+          <span class="benefit-icon">⚡</span>
+          <span>Controle total das suas emoções em qualquer situação</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon">🎯</span>
+          <span>Capacidade de impor respeito naturalmente</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon">🧠</span>
+          <span>Códigos mentais para dominar relacionamentos</span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon">🚀</span>
+          <span>Transformação mental acelerada e resultados rápidos</span>
         </div>
       </div>
 
-      <div class="final hidden" id="finalMessage">
-        <h2>🧠 SEU DIAGNÓSTICO FOI CONCLUÍDO</h2>
-        <p><strong>Resultado:</strong> Sua mente está te limitando mais do que você imagina. Mas a chave para virar esse jogo já existe.</p>
-
-        <p>Você vai aprender os códigos mentais que homens de alto nível usam para:</p>
-        <ul style="text-align:left; color:#ccc; font-size:16px; margin: 20px auto;">
-          <li>✅ Manter o controle sob pressão</li>
-          <li>✅ Impor respeito sem gritar</li>
-          <li>✅ Calar a ansiedade com estratégia</li>
-          <li>✅ Agir com frieza onde todo mundo pira</li>
-        </ul>
-
-        <div class="urgency-text">
-          Oferta disponível por tempo limitado!
-        </div>
-
-        <a href="https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm" target="_blank">
-          <button class="btn-final">QUERO ACESSAR O CÓDIGO</button>
-        </a>
+      <div class="price-section">
+        <div class="old-price">De R$ 297,00</div>
+        <div class="new-price">R$ 97,00</div>
+        <div class="installments">à vista ou 12x de R$ 9,73</div>
+        <button class="btn-final" onclick="window.open('https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm', '_blank')">
+          🔥 QUERO DOMINAR MINHA MENTE AGORA! 🔥
+        </button>
       </div>
     </div>
   </div>
 
   <script>
-    const questions = document.querySelectorAll(".question");
-    const progressBar = document.getElementById("progressBar");
-    const questionCounter = document.getElementById("questionCounter");
-    let current = 0;
-    const totalQuestions = 6;
+    let currentQuestion = 1;
+    const totalQuestions = 5;
+    let selectedAnswers = {};
 
     function updateProgress() {
-      const progress = ((current + 1) / totalQuestions) * 100;
-      progressBar.style.width = progress + "%";
-      questionCounter.textContent = `Pergunta ${current + 1} de ${totalQuestions}`;
+      const progress = (currentQuestion / totalQuestions) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
     }
 
-    function nextQuestion() {
-      if (current < questions.length - 1) {
-        questions[current].classList.add("hidden");
-        current++;
-        questions[current].classList.remove("hidden");
-        updateProgress();
-      } else {
-        questions[current].classList.add("hidden");
-        document.getElementById("finalMessage").classList.remove("hidden");
-        document.querySelector(".progress-bar").style.display = "none";
-        document.querySelector(".question-counter").style.display = "none";
-        document.getElementById("finalMessage").scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    function setupQuestionListeners() {
+      const currentContainer = document.querySelector(`[data-question="${currentQuestion}"]`);
+      const options = currentContainer.querySelectorAll('.option');
+      const nextBtn = document.getElementById('nextBtn');
 
-    updateProgress();
-  </script>
-</body>
-</html>
+      options.forEach(option => {
+        option.addEventListener('click', function() {
+          // Remove seleção anterior
+          options.forEach(opt => opt.classList.remove('selected'));
+          
+          // Adiciona seleção atual
+          this.classList.add('selected');
+          
+          // Armazena resposta
+      
