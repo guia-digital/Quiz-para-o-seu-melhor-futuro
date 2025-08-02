@@ -1,438 +1,388 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Código do Poder</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>O Código do Poder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
-            line-height: 1.4;
-            overflow-x: hidden;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      line-height: 1.4;
+      overflow-x: hidden;
+    }
 
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: #1a1a1a;
-            z-index: 1000;
-        }
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #1a1a1a;
+      z-index: 1000;
+    }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff4444, #ff6600, #ffaa00);
-            transition: width 0.3s ease;
-            width: 0%;
-        }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4444, #ff6600, #ffaa00);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 80px 20px;
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffaa00, #ff4444);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffaa00, #ff4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
 
-        .subtitle {
-            font-size: 1.2rem;
-            color: #cccccc;
-            font-weight: 300;
-        }
+    .subtitle {
+      font-size: 1.2rem;
+      color: #cccccc;
+      font-weight: 300;
+    }
 
-        .quiz-container {
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #333;
-        }
+    .quiz-container {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 30px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 1px solid #333;
+    }
 
-        .question {
-            display: none;
-        }
+    .question {
+      display: none;
+    }
 
-        .question.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
+    .question.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .question h3 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            color: #ffffff;
-            font-weight: 600;
-        }
+    .question h3 {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      color: #ffffff;
+      font-weight: 600;
+    }
 
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .option {
-            background: #2a2a2a;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            color: #e0e0e0;
-        }
+    .option {
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      color: #e0e0e0;
+    }
 
-        .option:hover {
-            background: #ff4444;
-            border-color: #ff4444;
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
-        }
+    .option:hover {
+      background: #ff4444;
+      border-color: #ff4444;
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+    }
 
-        .result {
-            display: none;
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
+    .result {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
 
-        .result p {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            color: #e0e0e0;
-            line-height: 1.6;
-        }
+    .result p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
 
-        .cta-button {
-            background: linear-gradient(135deg, #ff6600, #ffaa00);
-            color: #ffffff;
-            padding: 18px 40px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 5px 20px rgba(255, 102, 0, 0.3);
-        }
+    .cta-button {
+      background: linear-gradient(135deg, #ff6600, #ffaa00);
+      color: #ffffff;
+      padding: 18px 40px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 5px 20px rgba(255, 102, 0, 0.3);
+      margin-top: 20px;
+    }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 102, 0, 0.5);
-        }
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 102, 0, 0.5);
+    }
 
-        .transformation-scale {
-            margin-top: 40px;
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid #333;
-        }
+    .transformation-scale,
+    .testimonials {
+      margin-top: 40px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 25px;
+      border: 1px solid #333;
+    }
 
-        .transformation-scale h4 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: #ffaa00;
-            text-align: center;
-        }
+    .transformation-scale h4,
+    .testimonials h4 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #ffaa00;
+      text-align: center;
+    }
 
-        .metric {
-            margin-bottom: 15px;
-        }
+    .metric {
+      margin-bottom: 15px;
+    }
 
-        .metric-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: #cccccc;
-        }
+    .metric-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+      color: #cccccc;
+    }
 
-        .metric-bar {
-            background: #2a2a2a;
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
+    .metric-bar {
+      background: #2a2a2a;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
 
-        .metric-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff4444, #ffaa00);
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
+    .metric-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4444, #ffaa00);
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
 
-        .testimonials {
-            margin-top: 40px;
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid #333;
-        }
+    .testimonial {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #333;
+    }
 
-        .testimonials h4 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: #ffaa00;
-            text-align: center;
-        }
+    .testimonial:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
 
-        .testimonial {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #333;
-        }
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff4444, #ffaa00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
 
-        .testimonial:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
+    .testimonial-content {
+      flex: 1;
+    }
 
-        .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff4444, #ffaa00);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
+    .testimonial-name {
+      font-weight: 600;
+      color: #ffaa00;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
 
-        .testimonial-content {
-            flex: 1;
-        }
+    .testimonial-text {
+      color: #cccccc;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
 
-        .testimonial-name {
-            font-weight: 600;
-            color: #ffaa00;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        .testimonial-text {
-            color: #cccccc;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .option {
-                font-size: 0.9rem;
-                padding: 12px 15px;
-            }
-            
-            .cta-button {
-                font-size: 1rem;
-                padding: 15px 30px;
-            }
-        }
-    </style>
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      .subtitle { font-size: 1rem; }
+      .option { font-size: 0.9rem; padding: 12px 15px; }
+      .cta-button { font-size: 1rem; padding: 15px 30px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-    </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
 
-    <div class="container">
-        <header>
-            <h1>O Código do Poder</h1>
-            <p class="subtitle">Descubra os códigos mentais secretos que separam homens comuns dos verdadeiros líderes…</p>
-        </header>
+  <div class="container">
+    <header>
+      <h1>O Código do Poder</h1>
+      <p class="subtitle">Descubra os códigos mentais secretos que separam homens comuns dos verdadeiros líderes…</p>
+    </header>
 
-        <div class="quiz-container">
-            <div class="question active" data-question="1">
-                <h3>Quando alguém te desrespeita em público, sua reação imediata é:</h3>
-                <div class="options">
-                    <div class="option" data-value="a">Ficar nervoso e não saber o que dizer</div>
-                    <div class="option" data-value="b">Responder com agressividade verbal</div>
-                    <div class="option" data-value="c">Manter a calma e responder com inteligência</div>
-                    <div class="option" data-value="d">Evitar o confronto e mudar de assunto</div>
-                </div>
-            </div>
-
-            <div class="question" data-question="2">
-                <h3>Em situações de alta pressão, você:</h3>
-                <div class="options">
-                    <div class="option" data-value="a">Perde o controle e toma decisões impulsivas</div>
-                    <div class="option" data-value="b">Congela e fica incapacitado de agir</div>
-                    <div class="option" data-value="c">Usa a pressão para se motivar ainda mais</div>
-                    <div class="option" data-value="d">Depende de outros para tomar decisões</div>
-                </div>
-            </div>
-
-            <div class="question" data-question="3">
-                <h3>Seu nível de influência sobre as pessoas ao seu redor é:</h3>
-                <div class="options">
-                    <div class="option" data-value="a">Mínimo - as pessoas raramente me ouvem</div>
-                    <div class="option" data-value="b">Moderado - algumas pessoas me respeitam</div>
-                    <div class="option" data-value="c">Alto - as pessoas naturalmente me seguem</div>
-                    <div class="option" data-value="d">Inexistente - sou ignorado com frequência</div>
-                </div>
-            </div>
-
-            <div class="question" data-question="4">
-                <h3>Quando você entra em uma sala cheia de pessoas:</h3>
-                <div class="options">
-                    <div class="option" data-value="a">Tenta passar despercebido</div>
-                    <div class="option" data-value="b">Se sente inseguro e desconfortável</div>
-                    <div class="option" data-value="c">Assume o controle naturalmente</div>
-                    <div class="option" data-value="d">Espera que outros tomem a iniciativa</div>
-                </div>
-            </div>
-
-            <div class="question" data-question="5">
-                <h3>Sua relação com suas próprias emoções é:</h3>
-                <div class="options">
-                    <div class="option" data-value="a">Elas te controlam completamente</div>
-                    <div class="option" data-value="b">Você as reprime até explodir</div>
-                    <div class="option" data-value="c">Você as domina e usa a seu favor</div>
-                    <div class="option" data-value="d">Você as ignora e finge que não existem</div>
-                </div>
-            </div>
-
-            <div class="result">
-                <p>Você tem grande potencial para se tornar um líder, mas ainda precisa desbloquear os códigos mentais certos para ter controle emocional absoluto e se impor em qualquer situação.</p>
-                <a href="https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm" class="cta-button">QUERO DESBLOQUEAR O CÓDIGO DO PODER</a>
-            </div>
+    <div class="quiz-container">
+      <!-- Quiz Questions -->
+      <div class="question active" data-question="1">
+        <h3>Quando alguém te desrespeita em público, sua reação imediata é:</h3>
+        <div class="options">
+          <div class="option">Ficar nervoso e não saber o que dizer</div>
+          <div class="option">Responder com agressividade verbal</div>
+          <div class="option">Manter a calma e responder com inteligência</div>
+          <div class="option">Evitar o confronto e mudar de assunto</div>
         </div>
+      </div>
+      <div class="question" data-question="2">
+        <h3>Em situações de alta pressão, você:</h3>
+        <div class="options">
+          <div class="option">Perde o controle e toma decisões impulsivas</div>
+          <div class="option">Congela e fica incapacitado de agir</div>
+          <div class="option">Usa a pressão para se motivar ainda mais</div>
+          <div class="option">Depende de outros para tomar decisões</div>
+        </div>
+      </div>
+      <div class="question" data-question="3">
+        <h3>Seu nível de influência sobre as pessoas ao seu redor é:</h3>
+        <div class="options">
+          <div class="option">Mínimo - as pessoas raramente me ouvem</div>
+          <div class="option">Moderado - algumas pessoas me respeitam</div>
+          <div class="option">Alto - as pessoas naturalmente me seguem</div>
+          <div class="option">Inexistente - sou ignorado com frequência</div>
+        </div>
+      </div>
+      <div class="question" data-question="4">
+        <h3>Quando você entra em uma sala cheia de pessoas:</h3>
+        <div class="options">
+          <div class="option">Tenta passar despercebido</div>
+          <div class="option">Se sente inseguro e desconfortável</div>
+          <div class="option">Assume o controle naturalmente</div>
+          <div class="option">Espera que outros tomem a iniciativa</div>
+        </div>
+      </div>
+      <div class="question" data-question="5">
+        <h3>Sua relação com suas próprias emoções é:</h3>
+        <div class="options">
+          <div class="option">Elas te controlam completamente</div>
+          <div class="option">Você as reprime até explodir</div>
+          <div class="option">Você as domina e usa a seu favor</div>
+          <div class="option">Você as ignora e finge que não existem</div>
+        </div>
+      </div>
+
+      <!-- Resultado final -->
+      <div class="result">
+        <p>Você tem grande potencial para se tornar um líder, mas ainda precisa desbloquear os códigos mentais certos para ter controle emocional absoluto e se impor em qualquer situação.</p>
+        <a href="https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm" class="cta-button">QUERO DESBLOQUEAR O CÓDIGO DO PODER</a>
 
         <div class="transformation-scale">
-            <h4>Sua Transformação Mental</h4>
-            <div class="metric">
-                <div class="metric-label">
-                    <span>Autoconfiança</span>
-                    <span>30% → 90%</span>
-                </div>
-                <div class="metric-bar">
-                    <div class="metric-fill" style="width: 90%"></div>
-                </div>
-            </div>
-            <div class="metric">
-                <div class="metric-label">
-                    <span>Controle emocional</span>
-                    <span>40% → 95%</span>
-                </div>
-                <div class="metric-bar">
-                    <div class="metric-fill" style="width: 95%"></div>
-                </div>
-            </div>
-            <div class="metric">
-                <div class="metric-label">
-                    <span>Influência social</span>
-                    <span>35% → 85%</span>
-                </div>
-                <div class="metric-bar">
-                    <div class="metric-fill" style="width: 85%"></div>
-                </div>
-            </div>
+          <h4>Sua Transformação Mental</h4>
+          <div class="metric">
+            <div class="metric-label"><span>Autoconfiança</span><span>30% → 90%</span></div>
+            <div class="metric-bar"><div class="metric-fill" style="width: 90%"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-label"><span>Controle emocional</span><span>40% → 95%</span></div>
+            <div class="metric-bar"><div class="metric-fill" style="width: 95%"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-label"><span>Influência social</span><span>35% → 85%</span></div>
+            <div class="metric-bar"><div class="metric-fill" style="width: 85%"></div></div>
+          </div>
         </div>
 
         <div class="testimonials">
-            <h4>Transformações Reais</h4>
-            <div class="testimonial">
-                <div class="avatar">RM</div>
-                <div class="testimonial-content">
-                    <div class="testimonial-name">Rafael M.</div>
-                    <div class="testimonial-text">Hoje eu tenho domínio total sobre minhas emoções graças ao Código do Poder. As pessoas me respeitam de verdade agora.</div>
-                </div>
+          <h4>Transformações Reais</h4>
+          <div class="testimonial">
+            <div class="avatar">RM</div>
+            <div class="testimonial-content">
+              <div class="testimonial-name">Rafael M.</div>
+              <div class="testimonial-text">Hoje eu tenho domínio total sobre minhas emoções graças ao Código do Poder. As pessoas me respeitam de verdade agora.</div>
             </div>
-            <div class="testimonial">
-                <div class="avatar">GL</div>
-                <div class="testimonial-content">
-                    <div class="testimonial-name">Gabriel L.</div>
-                    <div class="testimonial-text">Minha postura e respeito nos ambientes mudou completamente. Os códigos mentais são reais e funcionam.</div>
-                </div>
+          </div>
+          <div class="testimonial">
+            <div class="avatar">GL</div>
+            <div class="testimonial-content">
+              <div class="testimonial-name">Gabriel L.</div>
+              <div class="testimonial-text">Minha postura e respeito nos ambientes mudou completamente. Os códigos mentais são reais e funcionam.</div>
             </div>
-            <div class="testimonial">
-                <div class="avatar">AC</div>
-                <div class="testimonial-content">
-                    <div class="testimonial-name">André C.</div>
-                    <div class="testimonial-text">Nunca imaginei que poderia ter tanta influência natural. O Código do Poder me transformou em quem eu sempre quis ser.</div>
-                </div>
+          </div>
+          <div class="testimonial">
+            <div class="avatar">AC</div>
+            <div class="testimonial-content">
+              <div class="testimonial-name">André C.</div>
+              <div class="testimonial-text">Nunca imaginei que poderia ter tanta influência natural. O Código do Poder me transformou em quem eu sempre quis ser.</div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        let currentQuestion = 1;
-        const totalQuestions = 5;
+  <script>
+    let currentQuestion = 1;
+    const totalQuestions = 5;
 
-        function updateProgress() {
-            const progress = (currentQuestion / totalQuestions) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
+    function updateProgress() {
+      const progress = (currentQuestion / totalQuestions) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+    }
 
-        function nextQuestion() {
-            const current = document.querySelector('.question.active');
-            current.classList.remove('active');
-            
-            currentQuestion++;
-            
-            if (currentQuestion <= totalQuestions) {
-                const next = document.querySelector(`[data-question="${currentQuestion}"]`);
-                next.classList.add('active');
-                updateProgress();
-            } else {
-                document.querySelector('.result').style.display = 'block';
-                updateProgress();
-                
-                setTimeout(() => {
-                    const metrics = document.querySelectorAll('.metric-fill');
-                    metrics.forEach(metric => {
-                        metric.style.width = metric.style.width;
-                    });
-                }, 100);
-            }
-        }
+    function nextQuestion() {
+      const current = document.querySelector('.question.active');
+      current.classList.remove('active');
 
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', nextQuestion);
-        });
+      currentQuestion++;
 
+      if (currentQuestion <= totalQuestions) {
+        const next = document.querySelector(`[data-question="${currentQuestion}"]`);
+        next.classList.add('active');
         updateProgress();
-    </script>
+      } else {
+        document.querySelector('.result').style.display = 'block';
+        updateProgress();
+      }
+    }
+
+    document.querySelectorAll('.option').forEach(option => {
+      option.addEventListener('click', nextQuestion);
+    });
+
+    updateProgress();
+  </script>
 </body>
 </html>
