@@ -1,388 +1,193 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>O Código do Poder</title>
+  <meta charset="UTF-8">
+  <title>Código da Mente – Descubra seu nível de controle mental</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* RESET & PALETA */
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#0d0d0d;color:#e5e5e5;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
+    .wrapper{max-width:480px;width:100%}
+    /* Progress bar */
+    .progress-bar{height:4px;background:#1a1a1a;border-radius:2px;margin-bottom:2rem;overflow:hidden}
+    .progress-fill{height:100%;background:#00e676;width:0;transition:width .4s ease}
+    /* Perguntas */
+    .step h2{font-size:1.1rem;font-weight:600;margin-bottom:.4rem}
+    .micro{font-size:.9rem;color:#ccc;margin-bottom:1.2rem}
+    .question{font-size:1.05rem;font-weight:600;margin-bottom:1rem}
+    .option{display:block;background:#111;border:1px solid #222;border-radius:6px;padding:1rem;margin:.6rem 0;cursor:pointer;transition:.2s}
+    .option:hover{background:#222;transform:translateY(-2px)}
+    /* Resultado */
+    .hidden{display:none}
+    #result h2{font-size:1.5rem;font-weight:700;margin-bottom:.5rem}
+    .proofs{margin:1.5rem 0}
+    .proof{background:#111;border-left:4px solid #00e676;padding:1rem;margin:1rem 0;font-size:.9rem;color:#ccc}
+    /* CTA com pulsar + glow */
+    .cta{background:#00e676;color:#000;font-weight:700;padding:1rem 2.2rem;border:none;border-radius:6px;font-size:1rem;text-decoration:none;display:inline-block;margin-top:1rem;animation:pulse-glow 1.8s infinite}
+    @keyframes pulse-glow{
+      0%{box-shadow:0 0 0 0 rgba(0,230,118,.55)}
+      70%{box-shadow:0 0 0 12px rgba(0,230,118,0)}
+      100%{box-shadow:0 0 0 0 rgba(0,230,118,0)}
     }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: #0a0a0a;
-      color: #ffffff;
-      line-height: 1.4;
-      overflow-x: hidden;
-    }
-
-    .progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: #1a1a1a;
-      z-index: 1000;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff4444, #ff6600, #ffaa00);
-      transition: width 0.3s ease;
-      width: 0%;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 80px 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, #ffaa00, #ff4444);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      color: #cccccc;
-      font-weight: 300;
-    }
-
-    .quiz-container {
-      background: #1a1a1a;
-      border-radius: 12px;
-      padding: 30px 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      border: 1px solid #333;
-    }
-
-    .question {
-      display: none;
-    }
-
-    .question.active {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .question h3 {
-      font-size: 1.3rem;
-      margin-bottom: 25px;
-      color: #ffffff;
-      font-weight: 600;
-    }
-
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .option {
-      background: #2a2a2a;
-      border: 1px solid #444;
-      border-radius: 8px;
-      padding: 15px 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      color: #e0e0e0;
-    }
-
-    .option:hover {
-      background: #ff4444;
-      border-color: #ff4444;
-      transform: translateX(5px);
-      box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
-    }
-
-    .result {
-      display: none;
-      text-align: center;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .result p {
-      font-size: 1.2rem;
-      margin-bottom: 25px;
-      color: #e0e0e0;
-      line-height: 1.6;
-    }
-
-    .cta-button {
-      background: linear-gradient(135deg, #ff6600, #ffaa00);
-      color: #ffffff;
-      padding: 18px 40px;
-      font-size: 1.2rem;
-      font-weight: 700;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      box-shadow: 0 5px 20px rgba(255, 102, 0, 0.3);
-      margin-top: 20px;
-    }
-
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255, 102, 0, 0.5);
-    }
-
-    .transformation-scale,
-    .testimonials {
-      margin-top: 40px;
-      background: #1a1a1a;
-      border-radius: 12px;
-      padding: 25px;
-      border: 1px solid #333;
-    }
-
-    .transformation-scale h4,
-    .testimonials h4 {
-      font-size: 1.3rem;
-      margin-bottom: 20px;
-      color: #ffaa00;
-      text-align: center;
-    }
-
-    .metric {
-      margin-bottom: 15px;
-    }
-
-    .metric-label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 5px;
-      font-size: 0.9rem;
-      color: #cccccc;
-    }
-
-    .metric-bar {
-      background: #2a2a2a;
-      height: 8px;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .metric-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff4444, #ffaa00);
-      border-radius: 4px;
-      transition: width 1s ease;
-    }
-
-    .testimonial {
-      display: flex;
-      align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #333;
-    }
-
-    .testimonial:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff4444, #ffaa00);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-
-    .testimonial-content {
-      flex: 1;
-    }
-
-    .testimonial-name {
-      font-weight: 600;
-      color: #ffaa00;
-      margin-bottom: 5px;
-      font-size: 0.9rem;
-    }
-
-    .testimonial-text {
-      color: #cccccc;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 480px) {
-      h1 { font-size: 2rem; }
-      .subtitle { font-size: 1rem; }
-      .option { font-size: 0.9rem; padding: 12px 15px; }
-      .cta-button { font-size: 1rem; padding: 15px 30px; }
-    }
+    /* Escala antes/depois */
+    .scale{margin:2rem 0}
+    .scale h3{font-size:1.1rem;margin-bottom:1rem}
+    .bar-container{background:#111;border-radius:4px;height:22px;margin:.4rem 0 1rem;overflow:hidden}
+    .bar-fill{height:100%;background:#00e676;width:0;transition:width 1.4s ease}
+    .label{display:flex;justify-content:space-between;font-size:.8rem;color:#aaa;margin-bottom:.2rem}
+    /* Slide animation */
+    .slide-in{animation:slideIn .4s forwards}
+    @keyframes slideIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
   </style>
 </head>
+
 <body>
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
-  </div>
+  <div class="wrapper">
+    <!-- Progress bar -->
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
 
-  <div class="container">
-    <header>
-      <h1>O Código do Poder</h1>
-      <p class="subtitle">Descubra os códigos mentais secretos que separam homens comuns dos verdadeiros líderes…</p>
-    </header>
-
-    <div class="quiz-container">
-      <!-- Quiz Questions -->
-      <div class="question active" data-question="1">
-        <h3>Quando alguém te desrespeita em público, sua reação imediata é:</h3>
-        <div class="options">
-          <div class="option">Ficar nervoso e não saber o que dizer</div>
-          <div class="option">Responder com agressividade verbal</div>
-          <div class="option">Manter a calma e responder com inteligência</div>
-          <div class="option">Evitar o confronto e mudar de assunto</div>
-        </div>
-      </div>
-      <div class="question" data-question="2">
-        <h3>Em situações de alta pressão, você:</h3>
-        <div class="options">
-          <div class="option">Perde o controle e toma decisões impulsivas</div>
-          <div class="option">Congela e fica incapacitado de agir</div>
-          <div class="option">Usa a pressão para se motivar ainda mais</div>
-          <div class="option">Depende de outros para tomar decisões</div>
-        </div>
-      </div>
-      <div class="question" data-question="3">
-        <h3>Seu nível de influência sobre as pessoas ao seu redor é:</h3>
-        <div class="options">
-          <div class="option">Mínimo - as pessoas raramente me ouvem</div>
-          <div class="option">Moderado - algumas pessoas me respeitam</div>
-          <div class="option">Alto - as pessoas naturalmente me seguem</div>
-          <div class="option">Inexistente - sou ignorado com frequência</div>
-        </div>
-      </div>
-      <div class="question" data-question="4">
-        <h3>Quando você entra em uma sala cheia de pessoas:</h3>
-        <div class="options">
-          <div class="option">Tenta passar despercebido</div>
-          <div class="option">Se sente inseguro e desconfortável</div>
-          <div class="option">Assume o controle naturalmente</div>
-          <div class="option">Espera que outros tomem a iniciativa</div>
-        </div>
-      </div>
-      <div class="question" data-question="5">
-        <h3>Sua relação com suas próprias emoções é:</h3>
-        <div class="options">
-          <div class="option">Elas te controlam completamente</div>
-          <div class="option">Você as reprime até explodir</div>
-          <div class="option">Você as domina e usa a seu favor</div>
-          <div class="option">Você as ignora e finge que não existem</div>
-        </div>
+    <!-- QUIZ -->
+    <div id="quiz">
+      <!-- Pergunta 1 -->
+      <div class="step" data-step="1">
+        <p class="micro">Sob pressão, sua mente é sua maior aliada… ou seu maior inimigo?</p>
+        <div class="question">Quando se sente pressionado, sua mente…</div>
+        <label class="option"><input type="radio" name="q1" value="3"> Travada – não consigo pensar</label>
+        <label class="option"><input type="radio" name="q1" value="2"> Acelerada – mil pensamentos</label>
+        <label class="option"><input type="radio" name="q1" value="1"> Clara – foco absoluto</label>
       </div>
 
-      <!-- Resultado final -->
-      <div class="result">
-        <p>Você tem grande potencial para se tornar um líder, mas ainda precisa desbloquear os códigos mentais certos para ter controle emocional absoluto e se impor em qualquer situação.</p>
-        <a href="https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm" class="cta-button">QUERO DESBLOQUEAR O CÓDIGO DO PODER</a>
+      <!-- Pergunta 2 -->
+      <div class="step hidden" data-step="2">
+        <p class="micro">Conflitos mostram mais sobre você do que qualquer currículo.</p>
+        <div class="question">Em uma conversa difícil, você…</div>
+        <label class="option"><input type="radio" name="q2" value="3"> Evita o confronto</label>
+        <label class="option"><input type="radio" name="q2" value="2"> Explode ou defende demais</label>
+        <label class="option"><input type="radio" name="q2" value="1"> Mantém calma e domina o jogo</label>
+      </div>
 
-        <div class="transformation-scale">
-          <h4>Sua Transformação Mental</h4>
-          <div class="metric">
-            <div class="metric-label"><span>Autoconfiança</span><span>30% → 90%</span></div>
-            <div class="metric-bar"><div class="metric-fill" style="width: 90%"></div></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label"><span>Controle emocional</span><span>40% → 95%</span></div>
-            <div class="metric-bar"><div class="metric-fill" style="width: 95%"></div></div>
-          </div>
-          <div class="metric">
-            <div class="metric-label"><span>Influência social</span><span>35% → 85%</span></div>
-            <div class="metric-bar"><div class="metric-fill" style="width: 85%"></div></div>
-          </div>
-        </div>
+      <!-- Pergunta 3 -->
+      <div class="step hidden" data-step="3">
+        <p class="micro">Seu reflexo no espelho revela mais que aparência — revela crenças.</p>
+        <div class="question">Quando olha no espelho, a voz mental diz:</div>
+        <label class="option"><input type="radio" name="q3" value="3"> “Não sou suficiente”</label>
+        <label class="option"><input type="radio" name="q3" value="2"> “Queria ser diferente”</label>
+        <label class="option"><input type="radio" name="q3" value="1"> “Estou no caminho certo”</label>
+      </div>
 
-        <div class="testimonials">
-          <h4>Transformações Reais</h4>
-          <div class="testimonial">
-            <div class="avatar">RM</div>
-            <div class="testimonial-content">
-              <div class="testimonial-name">Rafael M.</div>
-              <div class="testimonial-text">Hoje eu tenho domínio total sobre minhas emoções graças ao Código do Poder. As pessoas me respeitam de verdade agora.</div>
-            </div>
-          </div>
-          <div class="testimonial">
-            <div class="avatar">GL</div>
-            <div class="testimonial-content">
-              <div class="testimonial-name">Gabriel L.</div>
-              <div class="testimonial-text">Minha postura e respeito nos ambientes mudou completamente. Os códigos mentais são reais e funcionam.</div>
-            </div>
-          </div>
-          <div class="testimonial">
-            <div class="avatar">AC</div>
-            <div class="testimonial-content">
-              <div class="testimonial-name">André C.</div>
-              <div class="testimonial-text">Nunca imaginei que poderia ter tanta influência natural. O Código do Poder me transformou em quem eu sempre quis ser.</div>
-            </div>
-          </div>
-        </div>
+      <!-- Pergunta 4 -->
+      <div class="step hidden" data-step="4">
+        <p class="micro">Decisões moldam destinos. O que você faz na hora H?</p>
+        <div class="question">Na hora de decidir algo importante:</div>
+        <label class="option"><input type="radio" name="q4" value="3"> Fico em loop</label>
+        <label class="option"><input type="radio" name="q4" value="2"> Decido impulsivamente</label>
+        <label class="option"><input type="radio" name="q4" value="1"> Decido com clareza</label>
+      </div>
+
+      <!-- Pergunta 5 -->
+      <div class="step hidden" data-step="5">
+        <p class="micro">Sua presença é sentida… ou ignorada?</p>
+        <div class="question">Em grupo, você é visto como:</div>
+        <label class="option"><input type="radio" name="q5" value="3"> Invisível</label>
+        <label class="option"><input type="radio" name="q5" value="2"> Intermitente</label>
+        <label class="option"><input type="radio" name="q5" value="1"> Líder natural</label>
+      </div>
+
+      <!-- Pergunta 6 -->
+      <div class="step hidden" data-step="6">
+        <p class="micro">As frases que você repete moldam a vida que você vive.</p>
+        <div class="question">Qual frase você repete mentalmente?</div>
+        <label class="option"><input type="radio" name="q6" value="3"> “Devem estar me julgando”</label>
+        <label class="option"><input type="radio" name="q6" value="2"> “E se eu falhar?”</label>
+        <label class="option"><input type="radio" name="q6" value="1"> “Eu controlo meu destino”</label>
+      </div>
+    </div>
+
+    <!-- RESULTADO -->
+    <div id="result" class="hidden">
+      <h2 id="levelTitle"></h2>
+      <p id="levelText"></p>
+
+      <!-- Provas sociais -->
+      <div class="proof">“Do zero ao controle total em 21 dias. Hoje fecho negócios com um mero olhar.”<br>— Felipe B., 30, empreendedor</div>
+      <div class="proof">“Parei de me sabotar. Minha autoestima subiu 90% e conquistei a promoção.”<br>— Camila R., 27, analista</div>
+      <div class="proof">“Nunca mais fui ignorado em reuniões. Agora todos ouvem quando eu falo.”<br>— João P., 34, gerente</div>
+
+      <a class="cta" href="https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm">Quero dominar minha mente agora →</a>
+      <p style="font-size:.8rem;color:#999;margin-top:.5rem">Vagas restantes: 17/50 – Preço sobe em 48h</p>
+
+      <!-- Escala Antes/Depois -->
+      <div class="scale">
+        <h3>Veja o que muda em 21 dias</h3>
+        <div class="label"><span>Autoestima 37%</span><span>+87%</span></div>
+        <div class="bar-container"><div class="bar-fill" data-width="87"></div></div>
+
+        <div class="label"><span>Confiança Social 28%</span><span>+92%</span></div>
+        <div class="bar-container"><div class="bar-fill" data-width="92"></div></div>
+
+        <div class="label"><span>Controle Emocional 33%</span><span>+89%</span></div>
+        <div class="bar-container"><div class="bar-fill" data-width="89"></div></div>
       </div>
     </div>
   </div>
 
   <script>
-    let currentQuestion = 1;
-    const totalQuestions = 5;
+    const steps = document.querySelectorAll('#quiz .step');
+    const progress = document.getElementById('progress');
+    const quiz = document.getElementById('quiz');
+    const result = document.getElementById('result');
+    let score = 0;
+    let current = 0;
 
     function updateProgress() {
-      const progress = (currentQuestion / totalQuestions) * 100;
-      document.getElementById('progressFill').style.width = progress + '%';
+      progress.style.width = ((current + 1) / steps.length) * 100 + '%';
     }
-
-    function nextQuestion() {
-      const current = document.querySelector('.question.active');
-      current.classList.remove('active');
-
-      currentQuestion++;
-
-      if (currentQuestion <= totalQuestions) {
-        const next = document.querySelector(`[data-question="${currentQuestion}"]`);
-        next.classList.add('active');
-        updateProgress();
+    function showStep(n) {
+      steps.forEach(s => s.classList.add('hidden'));
+      steps[n].classList.remove('hidden');
+      steps[n].classList.add('slide-in');
+      updateProgress();
+    }
+    function nextStep() {
+      const inputs = steps[current].querySelectorAll('input[type="radio"]');
+      const answered = [...inputs].find(i => i.checked);
+      if (!answered) return;
+      score += parseInt(answered.value);
+      current++;
+      if (current < steps.length) {
+        showStep(current);
       } else {
-        document.querySelector('.result').style.display = 'block';
-        updateProgress();
+        showResult();
       }
     }
+    function showResult() {
+      quiz.classList.add('hidden');
+      result.classList.remove('hidden');
+      result.classList.add('slide-in');
+      let level, text;
+      if (score >= 14) {
+        level = "Nível 3 – Bloqueios graves";
+        text = "Sua mente sabotadora está no comando. É urgente reprogramar.";
+      } else if (score >= 9) {
+        level = "Nível 2 – Oscilação constante";
+        text = "Você alterna poder e sabotagem. Com a técnica certa, vira a chave.";
+      } else {
+        level = "Nível 1 – Pronto para escalar";
+        text = "Sua base é sólida. Com o Código da Mente, você dominará qualquer sala.";
+      }
+      document.getElementById('levelTitle').textContent = level;
+      document.getElementById('levelText').textContent = text;
 
-    document.querySelectorAll('.option').forEach(option => {
-      option.addEventListener('click', nextQuestion);
-    });
-
-    updateProgress();
+      // Anima barras
+      document.querySelectorAll('.bar-fill').forEach(bar => {
+        const w = bar.dataset.width;
+        setTimeout(() => bar.style.width = w + '%', 300);
+      });
+    }
+    steps.forEach(s => s.addEventListener('change', nextStep));
+    showStep(0);
   </script>
 </body>
 </html>
