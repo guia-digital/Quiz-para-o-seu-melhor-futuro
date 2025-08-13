@@ -1,193 +1,202 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Código da Mente – Descubra seu nível de controle mental</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* RESET & PALETA */
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:#0d0d0d;color:#e5e5e5;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
-    .wrapper{max-width:480px;width:100%}
-    /* Progress bar */
-    .progress-bar{height:4px;background:#1a1a1a;border-radius:2px;margin-bottom:2rem;overflow:hidden}
-    .progress-fill{height:100%;background:#00e676;width:0;transition:width .4s ease}
-    /* Perguntas */
-    .step h2{font-size:1.1rem;font-weight:600;margin-bottom:.4rem}
-    .micro{font-size:.9rem;color:#ccc;margin-bottom:1.2rem}
-    .question{font-size:1.05rem;font-weight:600;margin-bottom:1rem}
-    .option{display:block;background:#111;border:1px solid #222;border-radius:6px;padding:1rem;margin:.6rem 0;cursor:pointer;transition:.2s}
-    .option:hover{background:#222;transform:translateY(-2px)}
-    /* Resultado */
-    .hidden{display:none}
-    #result h2{font-size:1.5rem;font-weight:700;margin-bottom:.5rem}
-    .proofs{margin:1.5rem 0}
-    .proof{background:#111;border-left:4px solid #00e676;padding:1rem;margin:1rem 0;font-size:.9rem;color:#ccc}
-    /* CTA com pulsar + glow */
-    .cta{background:#00e676;color:#000;font-weight:700;padding:1rem 2.2rem;border:none;border-radius:6px;font-size:1rem;text-decoration:none;display:inline-block;margin-top:1rem;animation:pulse-glow 1.8s infinite}
-    @keyframes pulse-glow{
-      0%{box-shadow:0 0 0 0 rgba(0,230,118,.55)}
-      70%{box-shadow:0 0 0 12px rgba(0,230,118,0)}
-      100%{box-shadow:0 0 0 0 rgba(0,230,118,0)}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descubra o que está te afundando</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-color: #ff4d2d;
+        --primary-hover: #e6442a;
+        --text-light: #f5f5f5;
+        --shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-    /* Escala antes/depois */
-    .scale{margin:2rem 0}
-    .scale h3{font-size:1.1rem;margin-bottom:1rem}
-    .bar-container{background:#111;border-radius:4px;height:22px;margin:.4rem 0 1rem;overflow:hidden}
-    .bar-fill{height:100%;background:#00e676;width:0;transition:width 1.4s ease}
-    .label{display:flex;justify-content:space-between;font-size:.8rem;color:#aaa;margin-bottom:.2rem}
-    /* Slide animation */
-    .slide-in{animation:slideIn .4s forwards}
-    @keyframes slideIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
-  </style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #000;
+        color: var(--text-light);
+        line-height: 1.5;
+        overflow-x: hidden;
+    }
+    .container {
+        max-width: 500px;
+        margin: auto;
+        min-height: 100vh;
+        padding: 50px 20px 120px;
+    }
+    .headline {
+        font-size: clamp(26px, 6vw, 34px);
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-align: center;
+        animation: fadeIn 0.6s ease-out;
+    }
+    .subheadline {
+        font-size: 18px;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 24px;
+        color: #bbb;
+    }
+    .question-microcopy {
+        color: var(--primary-color);
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        animation: pulse 1.5s infinite;
+    }
+    .question-title {
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+    .options {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .option-btn {
+        padding: 18px;
+        background: #111;
+        border: 2px solid #333;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.2s;
+        text-align: left;
+    }
+    .option-btn:hover {
+        border-color: var(--primary-color);
+        background: #1a1a1a;
+    }
+    .option-btn.selected {
+        border-color: var(--primary-color);
+        background: #1a1a1a;
+        box-shadow: var(--shadow);
+    }
+    .bottom-action {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 500px;
+        background: #000;
+        padding: 20px;
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.6);
+    }
+    .btn-primary {
+        background: var(--primary-color);
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        width: 100%;
+        transition: 0.2s;
+    }
+    .btn-primary:hover {
+        background: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+    }
+    .hidden { display: none; }
+    @keyframes fadeIn { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);} }
+    @keyframes pulse { 0%{opacity:1;} 50%{opacity:0.6;} 100%{opacity:1;} }
+</style>
 </head>
-
 <body>
-  <div class="wrapper">
-    <!-- Progress bar -->
-    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
 
-    <!-- QUIZ -->
-    <div id="quiz">
-      <!-- Pergunta 1 -->
-      <div class="step" data-step="1">
-        <p class="micro">Sob pressão, sua mente é sua maior aliada… ou seu maior inimigo?</p>
-        <div class="question">Quando se sente pressionado, sua mente…</div>
-        <label class="option"><input type="radio" name="q1" value="3"> Travada – não consigo pensar</label>
-        <label class="option"><input type="radio" name="q1" value="2"> Acelerada – mil pensamentos</label>
-        <label class="option"><input type="radio" name="q1" value="1"> Clara – foco absoluto</label>
-      </div>
-
-      <!-- Pergunta 2 -->
-      <div class="step hidden" data-step="2">
-        <p class="micro">Conflitos mostram mais sobre você do que qualquer currículo.</p>
-        <div class="question">Em uma conversa difícil, você…</div>
-        <label class="option"><input type="radio" name="q2" value="3"> Evita o confronto</label>
-        <label class="option"><input type="radio" name="q2" value="2"> Explode ou defende demais</label>
-        <label class="option"><input type="radio" name="q2" value="1"> Mantém calma e domina o jogo</label>
-      </div>
-
-      <!-- Pergunta 3 -->
-      <div class="step hidden" data-step="3">
-        <p class="micro">Seu reflexo no espelho revela mais que aparência — revela crenças.</p>
-        <div class="question">Quando olha no espelho, a voz mental diz:</div>
-        <label class="option"><input type="radio" name="q3" value="3"> “Não sou suficiente”</label>
-        <label class="option"><input type="radio" name="q3" value="2"> “Queria ser diferente”</label>
-        <label class="option"><input type="radio" name="q3" value="1"> “Estou no caminho certo”</label>
-      </div>
-
-      <!-- Pergunta 4 -->
-      <div class="step hidden" data-step="4">
-        <p class="micro">Decisões moldam destinos. O que você faz na hora H?</p>
-        <div class="question">Na hora de decidir algo importante:</div>
-        <label class="option"><input type="radio" name="q4" value="3"> Fico em loop</label>
-        <label class="option"><input type="radio" name="q4" value="2"> Decido impulsivamente</label>
-        <label class="option"><input type="radio" name="q4" value="1"> Decido com clareza</label>
-      </div>
-
-      <!-- Pergunta 5 -->
-      <div class="step hidden" data-step="5">
-        <p class="micro">Sua presença é sentida… ou ignorada?</p>
-        <div class="question">Em grupo, você é visto como:</div>
-        <label class="option"><input type="radio" name="q5" value="3"> Invisível</label>
-        <label class="option"><input type="radio" name="q5" value="2"> Intermitente</label>
-        <label class="option"><input type="radio" name="q5" value="1"> Líder natural</label>
-      </div>
-
-      <!-- Pergunta 6 -->
-      <div class="step hidden" data-step="6">
-        <p class="micro">As frases que você repete moldam a vida que você vive.</p>
-        <div class="question">Qual frase você repete mentalmente?</div>
-        <label class="option"><input type="radio" name="q6" value="3"> “Devem estar me julgando”</label>
-        <label class="option"><input type="radio" name="q6" value="2"> “E se eu falhar?”</label>
-        <label class="option"><input type="radio" name="q6" value="1"> “Eu controlo meu destino”</label>
-      </div>
+<div class="container">
+    <!-- Passo 1 -->
+    <div class="step active">
+        <div class="headline">⚠ Você está perdendo respeito e nem percebe</div>
+        <div class="subheadline">Em 4 perguntas rápidas, descubra o que está destruindo sua confiança e te fazendo ser ignorado.</div>
     </div>
 
-    <!-- RESULTADO -->
-    <div id="result" class="hidden">
-      <h2 id="levelTitle"></h2>
-      <p id="levelText"></p>
-
-      <!-- Provas sociais -->
-      <div class="proof">“Do zero ao controle total em 21 dias. Hoje fecho negócios com um mero olhar.”<br>— Felipe B., 30, empreendedor</div>
-      <div class="proof">“Parei de me sabotar. Minha autoestima subiu 90% e conquistei a promoção.”<br>— Camila R., 27, analista</div>
-      <div class="proof">“Nunca mais fui ignorado em reuniões. Agora todos ouvem quando eu falo.”<br>— João P., 34, gerente</div>
-
-      <a class="cta" href="https://pay.kiwify.com.br/3BAj3Jp?afid=DUndx9Wm">Quero dominar minha mente agora →</a>
-      <p style="font-size:.8rem;color:#999;margin-top:.5rem">Vagas restantes: 17/50 – Preço sobe em 48h</p>
-
-      <!-- Escala Antes/Depois -->
-      <div class="scale">
-        <h3>Veja o que muda em 21 dias</h3>
-        <div class="label"><span>Autoestima 37%</span><span>+87%</span></div>
-        <div class="bar-container"><div class="bar-fill" data-width="87"></div></div>
-
-        <div class="label"><span>Confiança Social 28%</span><span>+92%</span></div>
-        <div class="bar-container"><div class="bar-fill" data-width="92"></div></div>
-
-        <div class="label"><span>Controle Emocional 33%</span><span>+89%</span></div>
-        <div class="bar-container"><div class="bar-fill" data-width="89"></div></div>
-      </div>
+    <!-- Passo 2 -->
+    <div class="step hidden">
+        <div class="question-microcopy">"Quando a pressão bate, você some?"</div>
+        <div class="question-title">Em momentos decisivos, você...</div>
+        <div class="options">
+            <button class="option-btn">Congela e não consegue reagir</button>
+            <button class="option-btn">Fala qualquer coisa e se arrepende</button>
+            <button class="option-btn">Controla a situação</button>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const steps = document.querySelectorAll('#quiz .step');
-    const progress = document.getElementById('progress');
-    const quiz = document.getElementById('quiz');
-    const result = document.getElementById('result');
-    let score = 0;
-    let current = 0;
+    <!-- Passo 3 -->
+    <div class="step hidden">
+        <div class="question-microcopy">"As pessoas realmente te respeitam?"</div>
+        <div class="question-title">Quando tentam te impor algo injusto...</div>
+        <div class="options">
+            <button class="option-btn">Aceita calado e se odeia depois</button>
+            <button class="option-btn">Explode e perde a razão</button>
+            <button class="option-btn">Se impõe com firmeza</button>
+        </div>
+    </div>
 
-    function updateProgress() {
-      progress.style.width = ((current + 1) / steps.length) * 100 + '%';
-    }
-    function showStep(n) {
-      steps.forEach(s => s.classList.add('hidden'));
-      steps[n].classList.remove('hidden');
-      steps[n].classList.add('slide-in');
-      updateProgress();
-    }
-    function nextStep() {
-      const inputs = steps[current].querySelectorAll('input[type="radio"]');
-      const answered = [...inputs].find(i => i.checked);
-      if (!answered) return;
-      score += parseInt(answered.value);
-      current++;
-      if (current < steps.length) {
-        showStep(current);
-      } else {
-        showResult();
-      }
-    }
-    function showResult() {
-      quiz.classList.add('hidden');
-      result.classList.remove('hidden');
-      result.classList.add('slide-in');
-      let level, text;
-      if (score >= 14) {
-        level = "Nível 3 – Bloqueios graves";
-        text = "Sua mente sabotadora está no comando. É urgente reprogramar.";
-      } else if (score >= 9) {
-        level = "Nível 2 – Oscilação constante";
-        text = "Você alterna poder e sabotagem. Com a técnica certa, vira a chave.";
-      } else {
-        level = "Nível 1 – Pronto para escalar";
-        text = "Sua base é sólida. Com o Código da Mente, você dominará qualquer sala.";
-      }
-      document.getElementById('levelTitle').textContent = level;
-      document.getElementById('levelText').textContent = text;
+    <!-- Passo 4 -->
+    <div class="step hidden">
+        <div class="question-microcopy">"O que você diz para si mesmo?"</div>
+        <div class="question-title">Ao se olhar no espelho, sua mente fala...</div>
+        <div class="options">
+            <button class="option-btn">"Sou um fracasso"</button>
+            <button class="option-btn">"Eu não sou suficiente"</button>
+            <button class="option-btn">"Eu vou vencer"</button>
+        </div>
+    </div>
 
-      // Anima barras
-      document.querySelectorAll('.bar-fill').forEach(bar => {
-        const w = bar.dataset.width;
-        setTimeout(() => bar.style.width = w + '%', 300);
-      });
+    <!-- Passo 5 -->
+    <div class="step hidden">
+        <div class="question-microcopy">"Você decide ou deixa a vida decidir?"</div>
+        <div class="question-title">Quando precisa tomar uma decisão importante...</div>
+        <div class="options">
+            <button class="option-btn">Fica preso e procrastina</button>
+            <button class="option-btn">Decide no impulso e se arrepende</button>
+            <button class="option-btn">Decide com clareza e firmeza</button>
+        </div>
+    </div>
+
+    <!-- Passo Final -->
+    <div class="step hidden">
+        <div class="headline">🚀 Está pronto para mudar isso?</div>
+        <div class="subheadline">Você sabe que se continuar assim, vai perder mais respeito, oportunidades e confiança.  
+        Chegou a hora de mudar — agora.</div>
+        <div class="bottom-action">
+            <a href="https://seusite.com/checkout">
+                <button class="btn-primary">Quero recuperar minha confiança agora</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+const steps = document.querySelectorAll(".step");
+let currentStep = 0;
+
+function nextStep() {
+    if (currentStep < steps.length - 1) {
+        steps[currentStep].classList.add("hidden");
+        currentStep++;
+        steps[currentStep].classList.remove("hidden");
     }
-    steps.forEach(s => s.addEventListener('change', nextStep));
-    showStep(0);
-  </script>
+}
+
+document.querySelectorAll(".option-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        btn.parentElement.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        setTimeout(nextStep, 500);
+    });
+});
+</script>
+
 </body>
 </html>
